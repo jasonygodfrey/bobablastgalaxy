@@ -55,13 +55,34 @@ class Level extends Phaser.Scene {
 			loop: true,
 		});
 // playButton
-const playButton = this.add.image(640, 520, "playbutton"); // Update the Y position to move the play button down
+const playButton = this.add.image(640, 520, "playbutton");
 playButton.setInteractive();
-playButton.setScale(0.5); // Reduce the size of the play button by 20%
+playButton.setScale(0.5); // Start scale
+
+playButton.isTweening = false; // Add a property to check if the button is in a tween
+
 playButton.on("pointerup", () => {
-  // Handle play button click event
-  console.log("Play button clicked");
+    if (!playButton.isTweening) { // Only react to the click if the button is not in a tween
+        console.log("Play button clicked");
+
+        // Set the isTweening property to true at the start of the tween
+        playButton.isTweening = true;
+
+        // Scales down the button to simulate a press
+        this.tweens.add({
+            targets: playButton,
+            scaleX: 0.45,
+            scaleY: 0.45,
+            yoyo: true, // Yoyo effect makes the scale go back to its original value after reaching 0.45
+            duration: 200,
+            onComplete: function () { // Set the isTweening property back to false when the tween completes
+                playButton.isTweening = false;
+            }
+        });
+    }
 });
+
+
 		// Load the audio
 		const music = this.sound.add("music", { loop: true });
 		music.play();
