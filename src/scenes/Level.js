@@ -15,9 +15,11 @@ class Level extends Phaser.Scene {
 
 	/** @returns {void} */
 	editorCreate() {
-		// Load the background image
-		this.add.image(640, 360, "background");
-	  
+  // Load the background image
+  const background = this.add.image(640, 360, "background2");
+  background.setScale(0.5); // Scale the background image by 50% to fit the screen
+  background.setDisplaySize(1280, 720); // Set the display size of the background image to match the scaled size
+
 		// dino
 		const dino = this.add.image(640, 288, "dino");
 	  
