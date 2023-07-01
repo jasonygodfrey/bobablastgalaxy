@@ -12,10 +12,10 @@
           "type": "image"
         },
         {
-            "url": "assets/background2.png",
-            "key": "background2",
-            "type": "image"
-          },
+          "url": "assets/background2.png",
+          "key": "background2",
+          "type": "image"
+        },
         {
           "url": "assets/background.png",
           "key": "background",
@@ -25,6 +25,11 @@
           "url": "assets/redlightspellsdanger.mp3",
           "key": "music",
           "type": "audio"
+        },
+        {
+          "url": "assets/fonts/Galaxy1Italic-MeDp.ttf",
+          "key": "customFont",
+          "type": "font"
         }
       ]
     },

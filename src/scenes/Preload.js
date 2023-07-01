@@ -17,6 +17,8 @@ class Preload extends Phaser.Scene {
 	editorPreload() {
 
 		this.load.pack("asset-pack", "assets/asset-pack.json");
+		
+		
 	}
 
 	/** @returns {void} */

@@ -26,7 +26,7 @@ class Level extends Phaser.Scene {
 		text_1.setOrigin(0.5, 0);
 		text_1.text = "🧋🌌BOBA BLAST GALAXY🚀🌠";
 		text_1.setStyle({
-			fontFamily: "CuteFont",
+			fontFamily: "Comic Sans MS",
 			fontSize: "80px",
 			fill: "#ff96f5",
 			stroke: "#ffffff",
