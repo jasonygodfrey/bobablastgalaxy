@@ -15,6 +15,11 @@
           "url": "assets/background.png",
           "key": "background",
           "type": "image"
+        },
+        {
+          "url": "assets/redlightspellsdanger.mp3",
+          "key": "music",
+          "type": "audio"
         }
       ]
     },
