@@ -12,6 +12,11 @@
           "type": "image"
         },
         {
+            "url": "assets/pinkstars1.png",
+            "key": "pinkstars1",
+            "type": "image"
+          },
+        {
           "url": "assets/background2.png",
           "key": "background2",
           "type": "image"

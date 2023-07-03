@@ -1,4 +1,4 @@
-
+//main.js
 window.addEventListener('load', function () {
 
 	var game = new Phaser.Game({
@@ -15,6 +15,8 @@ window.addEventListener('load', function () {
 	game.scene.add("Preload", Preload);
 	game.scene.add("Level", Level);
 	game.scene.add("Boot", Boot, true);
+	game.scene.add("GameScene", GameScene);
+
 });
 
 class Boot extends Phaser.Scene {
