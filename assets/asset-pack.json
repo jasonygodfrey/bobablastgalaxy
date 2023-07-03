@@ -32,6 +32,11 @@
           "type": "audio"
         },
         {
+          "url": "assets/queen.mp3",
+          "key": "queen",
+          "type": "audio"
+        },
+        {
           "url": "assets/fonts/Galaxy1Italic-MeDp.ttf",
           "key": "customFont",
           "type": "font"

@@ -7,6 +7,7 @@ class Level extends Phaser.Scene {
 
 	constructor() {
 		super("Level");
+		this.music = null; // Add this line
 
 		/* START-USER-CTR-CODE */
 		// Write your code here.
@@ -15,6 +16,9 @@ class Level extends Phaser.Scene {
 
 	/** @returns {void} */
 	editorCreate() {
+			// Load the audio
+		this.music = this.sound.add("music", { loop: true });
+        this.music.play();
 		// Load the background image
 		const background = this.add.image(640, 360, "background2");
 		background.setScale(0.5); // Scale the background image by 50% to fit the screen
@@ -77,6 +81,7 @@ playButton.on("pointerup", () => {
             duration: 200,
             onComplete: () => { // Use arrow function here to keep 'this' context
                 playButton.isTweening = false;
+				this.music.stop(); // stop the music
 				this.scene.start("GameScene"); // Start the main game scene
             }
         });
@@ -85,10 +90,8 @@ playButton.on("pointerup", () => {
 
 
 
-		// Load the audio
-		const music = this.sound.add("music", { loop: true });
-		music.play();
-		this.events.emit("scene-awake");
+	
+
 	}
 
 

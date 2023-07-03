@@ -85,7 +85,7 @@ playButton.on("pointerup", () => {
 
 
 		// Load the audio
-		const music = this.sound.add("music", { loop: true });
+		const music = this.sound.add("queen", { loop: true });
 		music.play();
 		this.events.emit("scene-awake");
 	}
