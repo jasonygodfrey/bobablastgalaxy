@@ -64,24 +64,23 @@ destroyEnemy(projectile, enemy) {
 
     /* START-USER-CODE */
     preload() {
-        this.load.pack("assetPack", "assets/assetPack.json");
-
-        // Load the sprite sheet with frame dimensions
-        this.load.spritesheet('sparkle1', 'assets/sparkle1spritesheet.png', { frameWidth: 332, frameHeight: 600 });
-
-
+        this.load.pack("assetPack", "assets/asset-Pack.json");
+    
+        // Load the sprite sheet with new frame dimensions
+        this.load.spritesheet('sparkle1', 'assets/sparkle1spritesheet.png', { frameWidth: 33.2, frameHeight: 60 });
     }
+    
     // Write more your code here
     create() {
         this.editorCreate();
 
-        // Create an animation from the sprite sheet
-        this.anims.create({
-            key: 'sparkleAnimation',
-            frames: this.anims.generateFrameNumbers('sparkle1', { start: 0, end: 91 }),
-            frameRate: 60,
-            repeat: -1
-        });
+    // Create an animation from the new sprite sheet
+    this.anims.create({
+        key: 'sparkle',
+        frames: this.anims.generateFrameNumbers('sparkle1', { start: 0, end: 91 }), // Adjust the end frame as per your spritesheet
+        frameRate: 60,
+        repeat: -1
+    });
 
 
 
@@ -91,8 +90,8 @@ destroyEnemy(projectile, enemy) {
 
         // Add the sparkle animation as the 'exhaust' of the player ship
         this.playerExhaust = this.add.sprite(this.player.x, this.player.y + 90, 'sparkle1');
-        this.playerExhaust.play('sparkleAnimation');
-        this.playerExhaust.setScale(0.5, 0.2); // Adjust the scale to make the height smaller
+        this.playerExhaust.play('sparkle');
+        this.playerExhaust.setScale(2, 2); // Adjust the scale to make the height smaller
 
 
         // Set the depth of the playerExhaust to be less than the player

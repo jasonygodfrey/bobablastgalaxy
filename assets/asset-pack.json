@@ -61,8 +61,8 @@
             "key": "sparkle1",
             "type": "spritesheet",
             "frameConfig": {
-                "frameWidth": 332,
-                "frameHeight": 600
+                "frameWidth": 33.2,
+                "frameHeight": 60
             }
         }
         
