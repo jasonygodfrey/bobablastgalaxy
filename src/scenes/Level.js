@@ -16,9 +16,9 @@ class Level extends Phaser.Scene {
 
 	/** @returns {void} */
 	editorCreate() {
-			// Load the audio
+		// Load the audio
 		this.music = this.sound.add("music", { loop: true });
-        this.music.play();
+		this.music.play();
 		// Load the background image
 		const background = this.add.image(640, 360, "background2");
 		background.setScale(0.5); // Scale the background image by 50% to fit the screen
@@ -58,39 +58,39 @@ class Level extends Phaser.Scene {
 			},
 			loop: true,
 		});
-// playButton
-const playButton = this.add.image(640, 520, "playbutton");
-playButton.setInteractive();
-playButton.setScale(0.5); // Start scale
+		// playButton
+		const playButton = this.add.image(640, 520, "playbutton");
+		playButton.setInteractive();
+		playButton.setScale(0.5); // Start scale
 
-playButton.isTweening = false; // Add a property to check if the button is in a tween
+		playButton.isTweening = false; // Add a property to check if the button is in a tween
 
-playButton.on("pointerup", () => {
-    if (!playButton.isTweening) { // Only react to the click if the button is not in a tween
-        console.log("Play button clicked");
+		playButton.on("pointerup", () => {
+			if (!playButton.isTweening) { // Only react to the click if the button is not in a tween
+				console.log("Play button clicked");
 
-        // Set the isTweening property to true at the start of the tween
-        playButton.isTweening = true;
+				// Set the isTweening property to true at the start of the tween
+				playButton.isTweening = true;
 
-        // Scales down the button to simulate a press
-        this.tweens.add({
-            targets: playButton,
-            scaleX: 0.45,
-            scaleY: 0.45,
-            yoyo: true, // Yoyo effect makes the scale go back to its original value after reaching 0.45
-            duration: 200,
-            onComplete: () => { // Use arrow function here to keep 'this' context
-                playButton.isTweening = false;
-				this.music.stop(); // stop the music
-				this.scene.start("GameScene"); // Start the main game scene
-            }
-        });
-    }
-});
+				// Scales down the button to simulate a press
+				this.tweens.add({
+					targets: playButton,
+					scaleX: 0.45,
+					scaleY: 0.45,
+					yoyo: true, // Yoyo effect makes the scale go back to its original value after reaching 0.45
+					duration: 200,
+					onComplete: () => { // Use arrow function here to keep 'this' context
+						playButton.isTweening = false;
+						this.music.stop(); // stop the music
+						this.scene.start("GameScene"); // Start the main game scene
+					}
+				});
+			}
+		});
 
 
 
-	
+
 
 	}
 
