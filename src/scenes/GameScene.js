@@ -31,6 +31,22 @@ class GameScene extends Phaser.Scene {
                 projectile.destroy(); // destroy the projectile when it goes off screen
             }
         });
+
+        // Check for collision between the projectile and enemies
+        const hitRange = 50; // Adjust the hit range as needed
+
+        this.enemies.getChildren().forEach((enemy) => {
+            // Calculate the distance between the projectile and the enemy
+            const dx = projectile.x - enemy.x;
+            const dy = projectile.y - enemy.y;
+            const distanceSquared = dx * dx + dy * dy;
+
+            // Check if the distance is within the hit range
+            if (distanceSquared <= hitRange * hitRange) {
+                enemy.destroy();
+                projectile.destroy();
+            }
+        });
     }
 
 
@@ -144,30 +160,30 @@ class GameScene extends Phaser.Scene {
             }
         );
         this.healthText.setOrigin(0.7, 0.5); // Center the text horizontally and vertically within the health bar
-        
-        
-          // Create the enemy group
-    this.enemies = this.add.group();
 
-    // Add 10 enemy sprites to the group
-    for (let i = 0; i < 10; i++) {
-        const enemy = this.add.sprite(
-            Phaser.Math.Between(0, this.sys.game.config.width),
-            Phaser.Math.Between(-500, -100),
-            'enemy1'
-        );
-        enemy.setScale(0.5); // Adjust the scale to make it smaller
-        this.enemies.add(enemy);
-        this.tweens.add({
-            targets: enemy,
-            y: Phaser.Math.Between(100, 300), // Y position to animate to
-            duration: 2000, // Animation duration in milliseconds
-            ease: 'Power1', // Easing function
-            delay: i * 200, // Delay each enemy's animation to create a staggered effect
-        });
-    }
-        
-        
+
+        // Create the enemy group
+        this.enemies = this.add.group();
+
+        // Add 10 enemy sprites to the group
+        for (let i = 0; i < 10; i++) {
+            const enemy = this.add.sprite(
+                Phaser.Math.Between(0, this.sys.game.config.width),
+                Phaser.Math.Between(-500, -100),
+                'enemy1'
+            );
+            enemy.setScale(0.5); // Adjust the scale to make it smaller
+            this.enemies.add(enemy);
+            this.tweens.add({
+                targets: enemy,
+                y: Phaser.Math.Between(100, 300), // Y position to animate to
+                duration: 2000, // Animation duration in milliseconds
+                ease: 'Power1', // Easing function
+                delay: i * 200, // Delay each enemy's animation to create a staggered effect
+            });
+        }
+
+
         // Start the shooting timer
         this.time.addEvent({
             delay: 3000, // 3000 milliseconds = 3 seconds
