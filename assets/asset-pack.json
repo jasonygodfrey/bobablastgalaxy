@@ -16,6 +16,11 @@
             "key": "pinkstars1",
             "type": "image"
           },
+          {
+            "url": "assets/ship1.png",
+            "key": "ship1",
+            "type": "image"
+          },
         {
           "url": "assets/background2.png",
           "key": "background2",
