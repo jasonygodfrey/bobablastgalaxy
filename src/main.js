@@ -9,7 +9,13 @@ window.addEventListener('load', function () {
 		scale: {
 			mode: Phaser.Scale.FIT,
 			autoCenter: Phaser.Scale.CENTER_BOTH
-		}
+		},
+		physics: {
+        	default: 'arcade',
+        	arcade: {
+            	debug: false, // Set this to true to view lines for debugging
+        	},
+    	},
 	});
 
 	game.scene.add("Preload", Preload);
@@ -18,6 +24,7 @@ window.addEventListener('load', function () {
 	game.scene.add("GameScene", GameScene);
 
 });
+
 
 class Boot extends Phaser.Scene {
 

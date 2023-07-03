@@ -11,44 +11,40 @@ class GameScene extends Phaser.Scene {
     }
 
     shootProjectile() {
-        // Create the projectile
-        let projectile = this.add.sprite(this.player.x, this.player.y - 50, 'boba1');
-        projectile.setScale(0.2); // Adjust the scale of the projectile if necessary
+    // Create the projectile
+    let projectile = this.physics.add.sprite(this.player.x, this.player.y - 50, 'boba1');
+    projectile.setScale(0.2); // Adjust the scale of the projectile if necessary
 
-        // Set the speed of the projectile
-        let projectileSpeed = 190;
+    // Set the speed of the projectile
+    let projectileSpeed = 190;
 
-        // Calculate the distance the projectile needs to travel to move off screen
-        let distance = this.player.y + 50;
+    // Calculate the distance the projectile needs to travel to move off screen
+    let distance = this.player.y + 50;
 
-        // Move the projectile up (in Galaga, projectiles move upwards)
-        this.tweens.add({
-            targets: projectile,
-            y: `-=${distance}`, // move upwards off screen
-            angle: 360, // rotate 360 degrees
-            duration: 1000 * (distance / projectileSpeed), // time based on speed
-            onComplete: () => {
-                projectile.destroy(); // destroy the projectile when it goes off screen
-            }
-        });
+    // Move the projectile up (in Galaga, projectiles move upwards)
+    this.tweens.add({
+        targets: projectile,
+        y: `-=${distance}`, // move upwards off screen
+        angle: 360, // rotate 360 degrees
+        duration: 1000 * (distance / projectileSpeed), // time based on speed
+        onComplete: () => {
+            projectile.destroy(); // destroy the projectile when it goes off screen
+        }
+    });
 
-        // Check for collision between the projectile and enemies
-        const hitRange = 50; // Adjust the hit range as needed
+    // Add the projectile to the group
+    this.projectiles.add(projectile);
+}
 
-        this.enemies.getChildren().forEach((enemy) => {
-            // Calculate the distance between the projectile and the enemy
-            const dx = projectile.x - enemy.x;
-            const dy = projectile.y - enemy.y;
-            const distanceSquared = dx * dx + dy * dy;
+destroyEnemy(projectile, enemy) {
+    // This function is called whenever a projectile overlaps with an enemy
 
-            // Check if the distance is within the hit range
-            if (distanceSquared <= hitRange * hitRange) {
-                enemy.destroy();
-                projectile.destroy();
-            }
-        });
-    }
+    // Remove the enemy
+    enemy.destroy();
 
+    // Remove the projectile
+    projectile.destroy();
+}
 
     /** @returns {void} */
     editorCreate() {
@@ -162,41 +158,50 @@ class GameScene extends Phaser.Scene {
         this.healthText.setOrigin(0.7, 0.5); // Center the text horizontally and vertically within the health bar
 
 
-        // Create the enemy group
-        this.enemies = this.add.group();
+        // Create the enemy group with physics
+    this.enemies = this.physics.add.group();
 
-        // Add 10 enemy sprites to the group
-        for (let i = 0; i < 10; i++) {
-            const enemy = this.add.sprite(
-                Phaser.Math.Between(0, this.sys.game.config.width),
-                Phaser.Math.Between(-500, -100),
-                'enemy1'
-            );
-            enemy.setScale(0.5); // Adjust the scale to make it smaller
-            this.enemies.add(enemy);
-            this.tweens.add({
-                targets: enemy,
-                y: Phaser.Math.Between(100, 300), // Y position to animate to
-                duration: 2000, // Animation duration in milliseconds
-                ease: 'Power1', // Easing function
-                delay: i * 200, // Delay each enemy's animation to create a staggered effect
-            });
-        }
-
-
-        // Start the shooting timer
-        this.time.addEvent({
-            delay: 3000, // 3000 milliseconds = 3 seconds
-            callback: this.shootProjectile, // function to be called
-            callbackScope: this, // context for the callback function
-            loop: true // repeat indefinitely
+    // Add 10 enemy sprites to the group
+    for (let i = 0; i < 10; i++) {
+        const enemy = this.add.sprite(
+            Phaser.Math.Between(0, this.sys.game.config.width),
+            Phaser.Math.Between(-500, -100),
+            'enemy1'
+        );
+        enemy.setScale(0.5); // Adjust the scale to make it smaller
+        this.enemies.add(enemy);
+        this.tweens.add({
+            targets: enemy,
+            y: Phaser.Math.Between(100, 300), // Y position to animate to
+            duration: 2000, // Animation duration in milliseconds
+            ease: 'Power1', // Easing function
+            delay: i * 200, // Delay each enemy's animation to create a staggered effect
         });
     }
+
+    // Create the projectiles group with physics
+    this.projectiles = this.physics.add.group();
+
+    // Overlap detection
+    this.physics.add.overlap(this.projectiles, this.enemies, this.destroyEnemy, null, this);
+
+    // Start the shooting timer
+    this.time.addEvent({
+        delay: 3000, // 3000 milliseconds = 3 seconds
+        callback: this.shootProjectile, // function to be called
+        callbackScope: this, // context for the callback function
+        loop: true // repeat indefinitely
+    });
+}
 
 
 
 
     update() {
+
+        
+
+
         // Update the position of the exhaust to follow the player ship
         this.playerExhaust.x = this.player.x;
         this.playerExhaust.y = this.player.y + 110;
@@ -211,7 +216,10 @@ class GameScene extends Phaser.Scene {
         const healthBarWidth = 200;
         const healthPercentage = playerHealth / 100; // Convert the health to a percentage value
         this.healthBar.setScale(healthPercentage, 1); // Adjust the health bar scale based on the health percentage
+
+
     }
+    
 
     /* END-USER-CODE */
 }
