@@ -1,58 +1,77 @@
 {
-    "section1": {
+  "section1": {
       "files": [
-        {
-          "url": "assets/dino.png",
-          "key": "dino",
-          "type": "image"
-        },
-        {
-          "url": "assets/playbutton.png",
-          "key": "playbutton",
-          "type": "image"
-        },
-        {
-            "url": "assets/pinkstars1.png",
-            "key": "pinkstars1",
-            "type": "image"
+          {
+              "url": "assets/dino.png",
+              "key": "dino",
+              "type": "image"
           },
           {
-            "url": "assets/ship1.png",
-            "key": "ship1",
-            "type": "image"
+              "url": "assets/playbutton.png",
+              "key": "playbutton",
+              "type": "image"
           },
-        {
-          "url": "assets/background2.png",
-          "key": "background2",
-          "type": "image"
+          {
+            "url": "assets/enemy1.png",
+            "key": "enemy1",
+            "type": "image"
         },
-        {
-          "url": "assets/background.png",
-          "key": "background",
-          "type": "image"
-        },
-        {
-          "url": "assets/redlightspellsdanger.mp3",
-          "key": "music",
-          "type": "audio"
-        },
-        {
-          "url": "assets/queen.mp3",
-          "key": "queen",
-          "type": "audio"
-        },
-        {
-          "url": "assets/fonts/Galaxy1Italic-MeDp.ttf",
-          "key": "customFont",
-          "type": "font"
+          {
+              "url": "assets/pinkstars1.png",
+              "key": "pinkstars1",
+              "type": "image"
+          },
+          {
+              "url": "assets/boba1.png",
+              "key": "boba1",
+              "type": "image"
+          },
+          {
+              "url": "assets/ship1.png",
+              "key": "ship1",
+              "type": "image"
+          },
+          {
+              "url": "assets/background2.png",
+              "key": "background2",
+              "type": "image"
+          },
+          {
+              "url": "assets/background.png",
+              "key": "background",
+              "type": "image"
+          },
+          {
+              "url": "assets/redlightspellsdanger.mp3",
+              "key": "music",
+              "type": "audio"
+          },
+          {
+              "url": "assets/queen.mp3",
+              "key": "queen",
+              "type": "audio"
+          },
+          {
+              "url": "assets/fonts/Galaxy1Italic-MeDp.ttf",
+              "key": "customFont",
+              "type": "font"
+          },
+          {
+            "url": "assets/sparkle1spritesheet.png",
+            "key": "sparkle1",
+            "type": "spritesheet",
+            "frameConfig": {
+                "frameWidth": 332,
+                "frameHeight": 600
+            }
         }
+        
       ]
-    },
-    "meta": {
+  },
+  "meta": {
       "app": "Phaser Editor 2D - Asset Pack Editor",
       "contentType": "phasereditor2d.pack.core.AssetContentType",
       "url": "https://phasereditor2d.com",
       "version": 2
-    }
   }
-  
+}
