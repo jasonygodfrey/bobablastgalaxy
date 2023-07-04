@@ -113,6 +113,9 @@ class GameScene extends Phaser.Scene {
     // Write more your code here
     create() {
         this.editorCreate();
+
+        this.input.setDefaultCursor('none');
+
         
 
             // Create the enemy projectiles group with physics

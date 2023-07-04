@@ -46,6 +46,11 @@
             "key": "purplejelly",
             "type": "image"
         },
+        {
+            "url": "assets/starcursor.png",
+            "key": "starcursor",
+            "type": "image"
+        },
           {
               "url": "assets/redlightspellsdanger.mp3",
               "key": "music",

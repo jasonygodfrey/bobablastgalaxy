@@ -56,6 +56,7 @@ class Level extends Phaser.Scene {
 		playButton.isTweening = false;
 
 		playButton.on("pointerup", () => {
+			
 			if (!playButton.isTweening) {
 				playButton.isTweening = true;
 
@@ -68,6 +69,7 @@ class Level extends Phaser.Scene {
 					onComplete: () => {
 						playButton.isTweening = false;
 						this.music.stop();
+						this.game.canvas.style.cursor = 'none';
 						this.scene.start("GameScene");
 					}
 				});
@@ -77,6 +79,13 @@ class Level extends Phaser.Scene {
 
 	create() {
 		this.editorCreate();
+
+		this.input.setDefaultCursor('url(assets/starcursor.png), pointer');
+
+
+
+
+		
 	
 		// Create the "Dev Contact" button text
 		let devContactButton = this.add.text(
@@ -99,7 +108,8 @@ class Level extends Phaser.Scene {
 	
 		// Change the color on hover
 		devContactButton.on('pointerover', () => {
-			devContactButton.setFill('#ff0000'); // Change to red color on hover
+			devContactButton.setFill('#B57EDC'); // Change to light purple color on hover
+
 			// Bounce effect on hover
 			this.tweens.add({
 				targets: devContactButton,
@@ -120,6 +130,8 @@ class Level extends Phaser.Scene {
 			// Open the dev website on click
 			window.open('https://jasongodfrey.dev', '_blank');
 		});
+
+		
 	}
 	
 }
