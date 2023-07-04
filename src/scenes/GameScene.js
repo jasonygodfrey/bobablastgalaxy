@@ -316,50 +316,69 @@ this.physics.add.collider(this.enemyProjectiles, this.player, (player, projectil
 
 
 
-    update() {
+update() {
+    // Update the position of the exhaust to follow the player ship
+    this.playerExhaust.x = this.player.x;
+    this.playerExhaust.y = this.player.y + 110;
 
+    // Scroll the background slower
+    this.background.tilePositionY -= 0.6;
 
-        // Update the position of the exhaust to follow the player ship
-        this.playerExhaust.x = this.player.x;
-        this.playerExhaust.y = this.player.y + 110;
-
-            // Reset the playerHit flag in each update frame
+    // Reset the playerHit flag in each update frame
     this.playerHit = false;
-    
-        // Scroll the background slower
-        this.background.tilePositionY -= 0.6;
-    
-        // Update the health bar
-        const healthBarWidth = 200;
-        const healthPercentage = this.playerHealth / 10; // Convert the health to a percentage value
-        this.healthBar.setScale(healthPercentage, 1); // Adjust the health bar scale based on the health percentage
-    
-  // Handle collision between projectiles and enemies
-  this.physics.add.collider(this.projectiles, this.enemies, (projectile, enemy) => {
-    if (!enemy.hitByProjectile && !enemy.isShooting) {
-      this.destroyEnemy(projectile, enemy);
-      enemy.hitByProjectile = true;
-    }
-  });
-    
-         // Handle collision between enemy projectiles and the player
-  this.physics.add.collider(this.enemyProjectiles, this.player, (projectile) => {
-    // Handle the collision with the player (e.g., decrease player health)
-    projectile.destroy(); // Destroy the enemy projectile
 
-    // Decrease the player's health
-    this.playerHealth -= 1;
+    // Update the health bar
+    const healthBarWidth = 200;
+    const healthPercentage = this.playerHealth / 10; // Convert the health to a percentage value
+    this.healthBar.setScale(healthPercentage, 1); // Adjust the health bar scale based on the health percentage
 
-    // Update the health text
-    this.healthText.setText(`BloodSugar: ${this.playerHealth}`);
+    // Handle collision between projectiles and enemies
+    this.physics.add.collider(this.projectiles, this.enemies, (projectile, enemy) => {
+        if (!enemy.hitByProjectile && !enemy.isShooting) {
+            enemy.hitByProjectile = true;
+            this.destroyEnemy(projectile, enemy);
+        }
+    });
 
-    if (this.playerHealth <= 0) {
-      // Player is defeated, handle game over logic
-    }
-  });
-    
+    // Handle collision between enemy projectiles and the player
+    this.physics.add.collider(this.enemyProjectiles, this.player, (player, projectile) => {
+        if (!this.playerHit) {
+            projectile.destroy(); // Destroy the enemy projectile
 
-    }
+            // Decrease the player's health
+            this.playerHealth -= 1;
+
+            // Update the health text
+            this.healthText.setText(`BloodSugar: ${this.playerHealth}`);
+
+            if (this.playerHealth <= 0) {
+                // Player is defeated, handle game over logic
+            }
+
+            this.playerHit = true; // Set the flag to true to prevent multiple collisions within the same frame
+
+            // Flash the player sprite to indicate getting hit
+            this.tweens.add({
+                targets: this.player,
+                alpha: 0.5, // Set the alpha to a lower value temporarily
+                duration: 100,
+                yoyo: true,
+                repeat: 3,
+                onComplete: () => {
+                    this.player.alpha = 1; // Reset the alpha value to 1
+                }
+            });
+        }
+    });
+
+    // Handle collision between enemy projectiles and the player (queued processing)
+    this.physics.world.colliders.getActive().forEach((collider) => {
+        if (collider.bodyA === this.player.body || collider.bodyB === this.player.body) {
+            collider.collideCallback(collider.bodyA === this.player.body ? collider.bodyB.gameObject : collider.bodyA.gameObject);
+        }
+    });
+}
+
     
 
     /* END-USER-CODE */
