@@ -42,10 +42,16 @@
               "type": "image"
           },
           {
+            "url": "assets/purplejelly.png",
+            "key": "purplejelly",
+            "type": "image"
+        },
+          {
               "url": "assets/redlightspellsdanger.mp3",
               "key": "music",
               "type": "audio"
           },
+          
           {
               "url": "assets/queen.mp3",
               "key": "queen",

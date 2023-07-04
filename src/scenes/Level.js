@@ -17,11 +17,11 @@ class Level extends Phaser.Scene {
 		const background = this.add.image(gameWidth / 2, gameHeight / 2, "background2");
 		background.setDisplaySize(gameWidth, gameHeight);
 
-		const text_1 = this.add.text(gameWidth / 2, 80, "", {});
+		const text_1 = this.add.text(gameWidth / 2, 480, "", {});
 		text_1.setOrigin(0.5, 0);
 		text_1.text = "🧋🌌BOBA BLAST GALAXY🚀🌠";
 		text_1.setStyle({
-			fontFamily: "Comic Sans MS",
+			fontFamily: "Fantasy",
 			fontSize: "80px",
 			fill: "#ff96f5",
 			stroke: "#ffffff",
@@ -49,9 +49,9 @@ class Level extends Phaser.Scene {
 			loop: true,
 		});
 
-		const playButton = this.add.image(gameWidth / 2, gameHeight / 2, "playbutton");
+		const playButton = this.add.image(gameWidth / 2, gameHeight / 2 + 400, "playbutton");
 		playButton.setInteractive();
-		playButton.setScale(0.5);
+		playButton.setScale(0.8);
 
 		playButton.isTweening = false;
 
