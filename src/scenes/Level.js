@@ -77,5 +77,49 @@ class Level extends Phaser.Scene {
 
 	create() {
 		this.editorCreate();
+	
+		// Create the "Dev Contact" button text
+		let devContactButton = this.add.text(
+			this.scale.width / 2, 
+			this.scale.height - 50, // 50 units from the bottom of the game screen
+			'>Dev Contact ⊂(◉‿◉)つ', 
+			{
+				fontFamily: 'Arial',
+				fontSize: '24px',
+				fill: '#ffffff',
+				align: 'center'
+			}
+		);
+	
+		// Center align the text
+		devContactButton.setOrigin(0.5, 0.5);
+	
+		// Enable the hand cursor on hover
+		devContactButton.setInteractive({ useHandCursor: true });
+	
+		// Change the color on hover
+		devContactButton.on('pointerover', () => {
+			devContactButton.setFill('#ff0000'); // Change to red color on hover
+			// Bounce effect on hover
+			this.tweens.add({
+				targets: devContactButton,
+				y: devContactButton.y - 10, // move up a little
+				duration: 300,
+				ease: 'Power2',
+				yoyo: true, // it will reverse the tween immediately, making it look like a bounce
+			});
+		});
+	
+		// Change the color back when the mouse leaves
+		devContactButton.on('pointerout', () => {
+			devContactButton.setFill('#ffffff'); // Change back to white when not hovering
+		});
+	
+		// Add a pointer up listener
+		devContactButton.on('pointerup', () => {
+			// Open the dev website on click
+			window.open('https://jasongodfrey.dev', '_blank');
+		});
 	}
+	
 }
