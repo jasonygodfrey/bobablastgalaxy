@@ -341,6 +341,7 @@ class GameScene extends Phaser.Scene {
                     
                         // Start the "Level" scene after the bounce animation is complete
                         this.time.delayedCall(200, () => {
+                            this.isGameOver = false;
                             this.scene.start("Level");
                         });
                     });
