@@ -50,7 +50,7 @@ class GameScene extends Phaser.Scene {
 
         if (this.isGameOver) {
             return; // Do not shoot projectiles if the game is over
-          }
+        }
         // Create the projectile
         let projectile = this.physics.add.sprite(this.player.x, this.player.y - 50, 'boba1');
         projectile.setScale(0.2); // Adjust the scale of the projectile if necessary
@@ -104,6 +104,8 @@ class GameScene extends Phaser.Scene {
         const music = this.sound.add("queen", { loop: true });
         music.play();
         this.events.emit("scene-awake");
+
+        
     }
 
 
@@ -125,6 +127,7 @@ class GameScene extends Phaser.Scene {
         this.editorCreate();
 
         this.input.setDefaultCursor('none');
+
 
 
 
@@ -304,14 +307,49 @@ class GameScene extends Phaser.Scene {
                     // Player is defeated, show game over screen
                     const centerX = this.sys.game.config.width / 2;
                     const centerY = this.sys.game.config.height / 2;
-                    this.add.image(centerX, centerY, 'gameover').setScale(1.5).setOrigin(0.5).setDepth(10000); // Set high depth value
+
+                    const gameoverImage = this.add
+                        .image(centerX, centerY - 50, "gameover")
+                        .setScale(1.5)
+                        .setOrigin(0.5)
+                        .setDepth(10000); // Set high depth value
+
+                    const menuButtonImage = this.add
+                        .image(centerX, centerY + 300, "menubutton")
+                        .setScale(0.8)
+                        .setOrigin(0.5)
+                        .setDepth(10000); // Set high depth value
+                    menuButtonImage.setInteractive();
 
 
                     // Stop all ongoing tweens and physics
                     this.physics.pause();
-                    this.tweens.pauseAll();
-                          // Set the game over flag to true
-      this.isGameOver = true;
+                    //this.tweens.pauseAll();
+                    
+                    menuButtonImage.on("pointerup", () => {
+                        this.playerHealth = 10;
+                        this.sound.stopAll(); // Stop all currently playing sounds
+                    
+                        // Create a bounce animation for the button
+                        this.tweens.add({
+                            targets: menuButtonImage,
+                            y: "-=20", // Move the button up
+                            duration: 100,
+                            yoyo: true,
+                            repeat: 1
+                        });
+                    
+                        // Start the "Level" scene after the bounce animation is complete
+                        this.time.delayedCall(200, () => {
+                            this.scene.start("Level");
+                        });
+                    });
+                    
+
+
+
+                    // Set the game over flag to true
+                    this.isGameOver = true;
 
 
 
