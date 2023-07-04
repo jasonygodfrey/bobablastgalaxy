@@ -11,6 +11,11 @@
             "key": "menubutton",
             "type": "image"
         },
+        {
+            "url": "assets/enemy2.png",
+            "key": "enemy2",
+            "type": "image"
+        },
           {
             "url": "assets/gameover.png",
             "key": "gameover",

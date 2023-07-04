@@ -1,8 +1,8 @@
-//GameScene.js
-class GameScene extends Phaser.Scene {
+//GameScene2.js
+class GameScene2 extends Phaser.Scene {
 
     constructor() {
-        super("GameScene");
+        super("GameScene2");
 
         /* START-USER-CTR-CODE */
 
@@ -88,10 +88,22 @@ class GameScene extends Phaser.Scene {
         // Check the number of remaining enemies
         const remainingEnemies = this.enemies.getChildren().length;
         if (remainingEnemies === 0) {
-
-            this.scene.start("GameScene2");
-
-         
+          // All initial enemies are defeated, spawn the second enemy
+          const centerX = this.sys.game.config.width / 2;
+          const centerY = this.sys.game.config.height / 2;
+      
+          const enemy2 = this.add.sprite(centerX, centerY, "enemy2");
+          enemy2.setScale(0.5);
+          enemy2.hitByProjectile = false; // Add the custom property to track hits
+          this.enemies.add(enemy2);
+      
+          this.tweens.add({
+            targets: enemy2,
+            y: Phaser.Math.Between(100, 300),
+            duration: 2000,
+            ease: "Power1",
+            delay: 200,
+          });
         }
       }
       
@@ -195,7 +207,7 @@ class GameScene extends Phaser.Scene {
         this.levelText = this.add.text(
             this.sys.game.config.width - 20,
             20,
-            'Level: 1',
+            'Level: 2',
             {
                 fontFamily: 'Arial',
                 fontSize: '44px',

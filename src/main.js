@@ -22,6 +22,7 @@ window.addEventListener('load', function () {
 	game.scene.add("Level", Level);
 	game.scene.add("Boot", Boot, true);
 	game.scene.add("GameScene", GameScene);
+	game.scene.add("GameScene2", GameScene2);
 
 });
 
