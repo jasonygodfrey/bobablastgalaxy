@@ -88,8 +88,10 @@ class GameScene extends Phaser.Scene {
         // Check the number of remaining enemies
         const remainingEnemies = this.enemies.getChildren().length;
         if (remainingEnemies === 0) {
+            this.sound.stopAll(); // Stop all currently playing sounds
 
             this.scene.start("GameScene2");
+            
 
          
         }

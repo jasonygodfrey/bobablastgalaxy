@@ -70,7 +70,7 @@ class Level extends Phaser.Scene {
 						playButton.isTweening = false;
 						this.music.stop();
 						this.game.canvas.style.cursor = 'none';
-						this.scene.start("GameScene");
+						this.scene.start("GameScene2");
 					}
 				});
 			}

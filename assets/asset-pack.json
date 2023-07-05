@@ -27,6 +27,16 @@
               "type": "image"
           },
           {
+            "url": "assets/boss1.png",
+            "key": "boss1",
+            "type": "image"
+        },
+          {
+            "url": "assets/bosstile.png",
+            "key": "bosstile",
+            "type": "image"
+        },
+          {
             "url": "assets/enemy1.png",
             "key": "enemy1",
             "type": "image"
@@ -77,6 +87,11 @@
               "key": "queen",
               "type": "audio"
           },
+          {
+            "url": "assets/bossmusic1.mp3",
+            "key": "bossmusic1",
+            "type": "audio"
+        },
           {
               "url": "assets/fonts/Galaxy1Italic-MeDp.ttf",
               "key": "customFont",

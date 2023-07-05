@@ -85,25 +85,16 @@ class GameScene2 extends Phaser.Scene {
         // Remove the projectile
         projectile.destroy();
       
-        // Check the number of remaining enemies
+
+                // Check the number of remaining enemies
         const remainingEnemies = this.enemies.getChildren().length;
         if (remainingEnemies === 0) {
-          // All initial enemies are defeated, spawn the second enemy
-          const centerX = this.sys.game.config.width / 2;
-          const centerY = this.sys.game.config.height / 2;
-      
-          const enemy2 = this.add.sprite(centerX, centerY, "enemy2");
-          enemy2.setScale(0.5);
-          enemy2.hitByProjectile = false; // Add the custom property to track hits
-          this.enemies.add(enemy2);
-      
-          this.tweens.add({
-            targets: enemy2,
-            y: Phaser.Math.Between(100, 300),
-            duration: 2000,
-            ease: "Power1",
-            delay: 200,
-          });
+            this.sound.stopAll(); // Stop all currently playing sounds
+
+            this.scene.start("GameScene2");
+            
+
+         
         }
       }
       
@@ -114,22 +105,25 @@ class GameScene2 extends Phaser.Scene {
         // Create the "pinkstars1" tileSprite
         const gameWidth = this.sys.game.config.width;
         const gameHeight = this.sys.game.config.height;
-        this.background = this.add.tileSprite(gameWidth / 2 - 100, gameHeight / 2, gameWidth, gameHeight, "pinkstars1");
-
+        
+        // Center of the game
+        const centerX = gameWidth / 2;
+        const centerY = gameHeight / 2;
+    
+        this.background = this.add.tileSprite(centerX+800, centerY, gameWidth, gameHeight, "bosstile");
+    
         // Calculate the scale for the background based on the game window size and image dimensions
         const scaleRatioX = gameWidth / 787;
         const scaleRatioY = gameHeight / 1800;
-        const scaleMultiplier = 2; // Adjust the value to increase or decrease the scale
+        const scaleMultiplier = 3; // Adjust the value to increase or decrease the scale
         this.background.setScale(scaleRatioX * scaleMultiplier, scaleRatioY * scaleMultiplier);
-
+    
         // Load the audio
-        const music = this.sound.add("queen", { loop: true });
+        const music = this.sound.add("bossmusic1", { loop: true });
         music.play();
         this.events.emit("scene-awake");
-
-        
     }
-
+    
 
 
 
@@ -248,24 +242,24 @@ class GameScene2 extends Phaser.Scene {
         // Create the enemy group with physics
         this.enemies = this.physics.add.group();
 
-        // Add 10 enemy sprites to the group
-        for (let i = 0; i < 10; i++) {
-            const enemy = this.add.sprite(
-                Phaser.Math.Between(0, this.sys.game.config.width),
-                Phaser.Math.Between(-500, -100),
-                'enemy1'
-            );
-            enemy.setScale(0.5);
-            enemy.hitByProjectile = false; // Add the custom property to track hits
-            this.enemies.add(enemy);
-            this.tweens.add({
-                targets: enemy,
-                y: Phaser.Math.Between(100, 300),
-                duration: 2000,
-                ease: 'Power1',
-                delay: i * 200,
-            });
-        }
+// Create the boss1 enemy sprite
+const boss1 = this.add.sprite(
+    this.sys.game.config.width / 2, // x-position: center of the game screen
+    -100, // y-position: off-screen, it will tween into view
+    'boss1'
+);
+boss1.setScale(0.5); // Scale the boss sprite if necessary
+boss1.hitByProjectile = false; // Add the custom property to track hits
+this.enemies.add(boss1);
+
+// Tween the boss1 into view
+this.tweens.add({
+    targets: boss1,
+    y: 350, // tween to random y-position between 100 and 300
+    duration: 2000, // tween duration
+    ease: 'Power1' // tween ease function
+});
+
 
 
 
