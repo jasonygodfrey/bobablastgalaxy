@@ -19,31 +19,80 @@ class GameScene2 extends Phaser.Scene {
     }
 
     shootProjectileFromEnemy(enemy) {
-        // Create the enemy projectile
-        const projectile = this.physics.add.sprite(enemy.x, enemy.y + 50, 'purplejelly');
-        projectile.setScale(0.2); // Adjust the scale if necessary
-
+        const projectileSpeed = 350; // Adjust the speed as needed
+    
+        // Create the first projectile moving straight downward
+        this.createProjectile(enemy.x, enemy.y - 150, 0, projectileSpeed);
+    
+        // Delay before creating the second projectile
+        this.time.delayedCall(200, () => {
+            // Create the second projectile moving at a slight angle to the left
+            this.createProjectile(enemy.x - 50, enemy.y - 150, -20, projectileSpeed);
+        }, this);
+    
+        // Delay before creating the third projectile
+        this.time.delayedCall(400, () => {
+            // Create the third projectile moving at a slight angle to the right
+            this.createProjectile(enemy.x + 50, enemy.y - 150, 20, projectileSpeed);
+        }, this);
+    
+        // Delay before creating the fourth projectile
+        this.time.delayedCall(600, () => {
+            // Create the fourth projectile moving at a steeper angle to the left
+            this.createProjectile(enemy.x - 100, enemy.y - 150, -45, projectileSpeed);
+        }, this);
+    
+        // Delay before creating the fifth projectile
+        this.time.delayedCall(800, () => {
+            // Create the fifth projectile moving at a steeper angle to the right
+            this.createProjectile(enemy.x + 100, enemy.y - 150, 45, projectileSpeed);
+        }, this);
+    
+        // Delay before creating the sixth projectile
+        this.time.delayedCall(1000, () => {
+            // Create the sixth projectile moving at a steep angle downward
+            this.createProjectile(enemy.x, enemy.y - 150, -90, projectileSpeed);
+        }, this);
+    }
+    
+    createProjectile(x, y, angle, speed) {
+        const projectile = this.physics.add.sprite(x, y, 'purplejelly');
+        projectile.setScale(0.5); // Adjust the scale if necessary
+    
         // Add the enemy projectile to the enemyProjectiles group
         this.enemyProjectiles.add(projectile);
-
-        // Set the speed of the enemy projectile
-        const projectileSpeed = 250; // Adjust the speed as needed
-
+    
         // Calculate the distance the projectile needs to travel to move off screen
-        const distance = this.sys.game.config.height - (enemy.y + 50);
-
-        // Move the projectile downwards
-        this.tweens.add({
+        const distance = this.sys.game.config.height - y;
+    
+        // Calculate the horizontal distance based on the angle
+        const horizontalDistance = Math.tan(Phaser.Math.DegToRad(angle)) * distance;
+    
+        // Move the projectile downwards and at the specified angle
+        const tween = this.tweens.add({
             targets: projectile,
+            x: x - horizontalDistance, // move horizontally to the left
             y: `+=${distance}`, // move downwards off screen
             angle: 360, // rotate 360 degrees
-            duration: 1000 * (distance / projectileSpeed), // time based on speed
+            duration: 1000 * (distance / speed), // time based on speed
+            ease: 'Sine.easeInOut', // Add easing for the waving effect
+            yoyo: true, // Add yoyo effect to create a wave motion
+            repeat: -1, // Repeat the animation indefinitely
             onComplete: () => {
                 projectile.destroy(); // destroy the projectile when it goes off screen
             }
         });
+    
+        // Delay before destroying the projectile
+        this.time.delayedCall(13000, () => {
+            tween.stop(); // Stop the tween animation
+            projectile.destroy(); // Destroy the projectile
+        });
+    
+        return projectile;
     }
-
+    
+    
 
 
     shootProjectile() {
@@ -258,10 +307,12 @@ const boss1 = this.add.sprite(
 
 boss1.setScale(0.5); // Scale the boss sprite if necessary
 boss1.hitByProjectile = false; // Add the custom property to track hits
-boss1.life = 3; // Add a life property with a value of 666
+boss1.life = 30; // Add a life property with a value of 666
 // Enable physics for boss1 sprite
 this.physics.world.enable(boss1);
 this.enemies.add(boss1);
+// Set the depth of the boss1 sprite
+boss1.setDepth(2); // Adjust the depth value as needed
 
 // Tween the boss1 into view
 this.tweens.add({
@@ -346,7 +397,7 @@ const loopBossMovement = () => {
 
         // Start the enemy shooting timer
         this.time.addEvent({
-            delay: 2000,
+            delay: 1900,
             callback: () => {
                 this.enemies.getChildren().forEach((enemy) => {
                     if (!enemy.hitByProjectile) {
