@@ -7,7 +7,7 @@ class GameScene2 extends Phaser.Scene {
         /* START-USER-CTR-CODE */
 
         // Initialize the player's health
-        this.playerHealth = 10;
+        this.playerHealth = 20;
         // Flag to track if player ship has been hit in the current frame
         this.playerHit = false;
 
