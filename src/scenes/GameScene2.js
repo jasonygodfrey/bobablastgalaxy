@@ -84,7 +84,7 @@ class GameScene2 extends Phaser.Scene {
         });
     
         // Delay before destroying the projectile
-        this.time.delayedCall(13000, () => {
+        this.time.delayedCall(10000, () => {
             tween.stop(); // Stop the tween animation
             projectile.destroy(); // Destroy the projectile
         });
@@ -397,7 +397,7 @@ const loopBossMovement = () => {
 
         // Start the enemy shooting timer
         this.time.addEvent({
-            delay: 1900,
+            delay: 1400,
             callback: () => {
                 this.enemies.getChildren().forEach((enemy) => {
                     if (!enemy.hitByProjectile) {
