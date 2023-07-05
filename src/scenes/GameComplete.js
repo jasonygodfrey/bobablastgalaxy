@@ -1,25 +1,25 @@
-//Level.js
+//GameComplete.js
 
-class Level extends Phaser.Scene {
+class GameComplete extends Phaser.Scene {
 
 	constructor() {
-		super("Level");
+		super("GameComplete");
 		this.music = null;
 	}
 
 	editorCreate() {
-		this.music = this.sound.add("music", { loop: true });
+		this.music = this.sound.add("car", { loop: true });
 		this.music.play();
 
 		const gameWidth = this.scale.width;
 		const gameHeight = this.scale.height;
 
-		const background = this.add.image(gameWidth / 2, gameHeight / 2, "background2");
+		const background = this.add.image(gameWidth / 2, gameHeight / 2, "winbackground");
 		background.setDisplaySize(gameWidth, gameHeight);
 
 		const text_1 = this.add.text(gameWidth / 2, 480, "", {});
 		text_1.setOrigin(0.5, 0);
-		text_1.text = "🧋🌌BOBA BLAST GALAXY🚀🌠";
+		text_1.text = "🌌Thanks for Playing!🌠 \n 🧋BOBA BLAST GALAXY🚀";
 		text_1.setStyle({
 			fontFamily: "Fantasy",
 			fontSize: "80px",
@@ -70,7 +70,7 @@ class Level extends Phaser.Scene {
 						playButton.isTweening = false;
 						this.music.stop();
 						this.game.canvas.style.cursor = 'none';
-						this.scene.start("GameScene2");
+						this.scene.start("GameScene");
 					}
 				});
 			}
@@ -83,6 +83,49 @@ class Level extends Phaser.Scene {
 		this.input.setDefaultCursor('url(assets/starcursor.png), pointer');
 
 
+// Create the "You Win" image
+const youWinImage = this.add.image(
+    this.sys.game.config.width / 2, // x-position: center of the game screen
+    this.sys.game.config.height / 2, // y-position: center of the game screen
+    'youwin'
+);
+youWinImage.setDepth(1000); // Set a high depth value to ensure it's displayed on top
+
+// Set the initial scale of the image
+youWinImage.setScale(0);
+
+// Create a tween to gradually increase the scale of the image
+this.tweens.add({
+    targets: youWinImage,
+    scaleX: 7, // target scale on the x-axis
+    scaleY: 7, // target scale on the y-axis
+    duration: 1000, // duration of the scaling animation
+    ease: 'Linear',
+    onComplete: () => {
+        // Scaling animation is complete
+        // Add any additional logic here if needed
+
+        // Create a tween to rock the image back and forth
+        this.tweens.add({
+            targets: youWinImage,
+            angle: 10, // angle of rotation
+            duration: 1000, // duration of each half of the rocking animation
+            ease: 'Sine.easeInOut',
+            yoyo: true, // allow the tween to reverse
+            repeat: -1 // repeat the tween indefinitely
+        });
+
+        // Create a tween to make the image flash
+        this.tweens.add({
+            targets: youWinImage,
+            alpha: 0.4, // target alpha (transparency)
+            duration: 500, // duration of each half of the flashing animation
+            ease: 'Linear',
+            yoyo: true, // allow the tween to reverse
+            repeat: -1 // repeat the tween indefinitely
+        });
+    }
+});
 
 
 		
@@ -90,12 +133,12 @@ class Level extends Phaser.Scene {
 		// Create the "Dev Contact" button text
 		let devContactButton = this.add.text(
 			this.scale.width / 2, 
-			this.scale.height - 350, // 50 units from the bottom of the game screen
-			'>Dev Contact ⊂(◉‿◉)つ', 
+			this.scale.height - 450, // 50 units from the bottom of the game screen
+			'>Developer Webpage ⊂(◉‿◉)つ', 
 			{
 				fontFamily: 'Arial',
-				fontSize: '44px',
-				fill: '#ffffff',
+				fontSize: '64px',
+				fill: '#ffa500',
 				align: 'center'
 			}
 		);

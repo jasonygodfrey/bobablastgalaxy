@@ -78,9 +78,13 @@ class GameScene2 extends Phaser.Scene {
 
     destroyEnemy(projectile, enemy) {
         // This function is called whenever a projectile overlaps with an enemy
-      
-        // Remove the enemy
+            // Decrease enemy life
+    enemy.life--;
+    console.log('Enemy Life:', enemy.life);  // print enemy life to console
+    // If enemy's life is zero, remove it
+    if (enemy.life <= 0) {
         enemy.destroy();
+    }
       
         // Remove the projectile
         projectile.destroy();
@@ -90,9 +94,10 @@ class GameScene2 extends Phaser.Scene {
         const remainingEnemies = this.enemies.getChildren().length;
         if (remainingEnemies === 0) {
             this.sound.stopAll(); // Stop all currently playing sounds
+            this.scene.start("GameComplete");
 
-            this.scene.start("GameScene2");
-            
+
+
 
          
         }
@@ -166,6 +171,8 @@ class GameScene2 extends Phaser.Scene {
 
         // Enable physics for the player sprite
         this.physics.world.enable(this.player);
+        
+
 
         // Add the sparkle animation as the 'exhaust' of the player ship
         this.playerExhaust = this.add.sprite(this.player.x, this.player.y + 90, 'sparkle1');
@@ -245,20 +252,77 @@ class GameScene2 extends Phaser.Scene {
 // Create the boss1 enemy sprite
 const boss1 = this.add.sprite(
     this.sys.game.config.width / 2, // x-position: center of the game screen
-    -100, // y-position: off-screen, it will tween into view
+    -300, // y-position: off-screen, it will tween into view
     'boss1'
 );
+
 boss1.setScale(0.5); // Scale the boss sprite if necessary
 boss1.hitByProjectile = false; // Add the custom property to track hits
+boss1.life = 3; // Add a life property with a value of 666
+// Enable physics for boss1 sprite
+this.physics.world.enable(boss1);
 this.enemies.add(boss1);
 
 // Tween the boss1 into view
 this.tweens.add({
     targets: boss1,
-    y: 350, // tween to random y-position between 100 and 300
-    duration: 2000, // tween duration
-    ease: 'Power1' // tween ease function
+    y: 350, // tween to y-position 350
+    duration: 24000, // tween duration
+    ease: 'Power1',
+    onComplete: () => {
+        // Add another tween to move the boss1 slightly to the right
+        this.tweens.add({
+            targets: boss1,
+            x: '+=400', // move 400 pixels to the right
+            duration: 2000, // duration of the movement
+            ease: 'Linear',
+            onComplete: () => {
+                // Boss1 movement is complete
+                // Add any additional logic here if needed
+                this.tweens.add({
+                    targets: boss1,
+                    x: '-=800', // move 800 pixels to the left
+                    duration: 4000, // duration of the movement
+                    ease: 'Linear',
+                    onComplete: () => {
+                        // Boss1 movement is complete
+                        // Add any additional logic here if needed
+                        loopBossMovement.call(this); // Use call() to ensure the correct context
+                    }
+                });
+            }
+        });
+    }
 });
+
+// Function to loop the boss1 movement
+const loopBossMovement = () => {
+    // Add another tween to move the boss1 from right to left
+    this.tweens.add({
+        targets: boss1,
+        x: '+=800', // move 400 pixels to the right
+        duration: 4000, // duration of the movement
+        ease: 'Linear',
+        onComplete: () => {
+            // Boss1 movement is complete
+            // Add any additional logic here if needed
+
+            // Add another tween to move the boss1 from left to right
+            this.tweens.add({
+                targets: boss1,
+                x: '-=800', // move 800 pixels to the left
+                duration: 4000, // duration of the movement
+                ease: 'Linear',
+                onComplete: () => {
+                    // Boss1 movement is complete
+                    // Add any additional logic here if needed
+                    // Start the loop again by calling the main loop function
+                    loopBossMovement.call(this); // Use call() to ensure the correct context
+                }
+            });
+        }
+    });
+};
 
 
 
@@ -267,7 +331,7 @@ this.tweens.add({
         this.physics.add.overlap(this.projectiles, this.enemies, (projectile, enemy) => {
             if (!enemy.hitByProjectile) { // Check if the enemy has not been hit before
                 this.destroyEnemy(projectile, enemy);
-                enemy.hitByProjectile = true; // Mark the enemy as hit
+                //enemy.hitByProjectile = true; // Mark the enemy as hit
             }
         }, null, this);
 
@@ -299,7 +363,7 @@ this.tweens.add({
         this.physics.add.collider(this.projectiles, this.enemies, (projectile, enemy) => {
             if (!enemy.hitByProjectile && !enemy.isShooting) {
                 this.destroyEnemy(projectile, enemy);
-                enemy.hitByProjectile = true;
+                //enemy.hitByProjectile = true;
             }
         });
 

@@ -27,6 +27,16 @@
               "type": "image"
           },
           {
+            "url": "assets/youwin.png",
+            "key": "youwin",
+            "type": "image"
+        },
+        {
+          "url": "assets/winbackground.png",
+          "key": "winbackground",
+          "type": "image"
+      },
+          {
             "url": "assets/boss1.png",
             "key": "boss1",
             "type": "image"
@@ -87,6 +97,11 @@
               "key": "queen",
               "type": "audio"
           },
+          {
+            "url": "assets/car.mp3",
+            "key": "car",
+            "type": "audio"
+        },
           {
             "url": "assets/bossmusic1.mp3",
             "key": "bossmusic1",
