@@ -307,7 +307,7 @@ const boss1 = this.add.sprite(
 
 boss1.setScale(0.5); // Scale the boss sprite if necessary
 boss1.hitByProjectile = false; // Add the custom property to track hits
-boss1.life = 30; // Add a life property with a value of 666
+boss1.life = 20; // Add a life property with a value of 666
 // Enable physics for boss1 sprite
 this.physics.world.enable(boss1);
 this.enemies.add(boss1);
